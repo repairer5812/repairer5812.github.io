@@ -1,35 +1,371 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>최경찬 | Portfolio</title>
-  <style>
-    body { font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif; margin: 0; background:#0f172a; color:#e2e8f0; }
-    main { max-width: 760px; margin: 0 auto; padding: 72px 24px; }
-    .card { background:#111827; border:1px solid #334155; border-radius:20px; padding:32px; box-shadow:0 20px 60px rgba(0,0,0,.25); }
-    h1 { font-size: 44px; margin: 0 0 12px; }
-    p { line-height: 1.7; color:#cbd5e1; }
-    .tag { display:inline-block; padding:6px 12px; border-radius:999px; background:#1e293b; color:#93c5fd; margin-right:8px; margin-bottom:8px; }
-    a { color:#93c5fd; }
-    ul { padding-left: 20px; }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="description" content="최경찬 — 고려대학교 SW·AI 융합대학원 석사과정생. LLM·AI4Science·멀티모달 관심." />
+<title>최경찬 · Kyung-Chan Choi</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet" />
+<style>
+:root {
+  --bg: #f7f6f3;
+  --surface: #ffffff;
+  --border: #e8e4dc;
+  --border-strong: #d4cdc0;
+  --text: #1a1a1a;
+  --muted: #6b6356;
+  --soft: #948b7c;
+  --primary: #1e2a4a;
+  --primary-dark: #131a2e;
+  --accent: #8b1538;
+  --accent-light: #b91c52;
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --radius: 10px;
+  --radius-lg: 14px;
+  --shadow: 0 2px 8px rgba(20,20,20,0.06);
+  --shadow-md: 0 8px 24px rgba(20,20,20,0.1);
+  --tx: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Segoe UI", "Apple SD Gothic Neo", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+a { color: var(--accent); text-decoration: none; }
+a:hover { color: var(--accent-light); }
+
+.container { max-width: 880px; margin: 0 auto; padding: 0 var(--space-6); }
+
+/* === Hero === */
+.hero {
+  padding: var(--space-16) 0 var(--space-12);
+  background: linear-gradient(180deg, var(--bg) 0%, #fbfaf7 100%);
+  border-bottom: 1px solid var(--border);
+}
+.hero-inner { text-align: left; }
+.eyebrow {
+  display: inline-block;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--space-3);
+}
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin-bottom: var(--space-3);
+}
+.hero h1 .name-en {
+  display: block;
+  font-size: 0.45em;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  margin-top: var(--space-2);
+}
+.hero .role {
+  font-size: 1.1rem;
+  color: var(--muted);
+  margin-bottom: var(--space-6);
+}
+.hero .interests {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+.interest-chip {
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 4px var(--space-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--primary);
+}
+.contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+.contacts a { color: var(--primary); font-weight: 500; }
+.contacts a:hover { color: var(--accent); }
+
+/* === Section === */
+.section { padding: var(--space-12) 0; }
+.section-head { margin-bottom: var(--space-6); }
+.section h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  margin-bottom: var(--space-2);
+}
+.section .desc { color: var(--muted); font-size: 0.95rem; }
+
+/* === Project cards === */
+.projects {
+  display: grid;
+  gap: var(--space-4);
+}
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  text-decoration: none;
+  color: inherit;
+  transition: all var(--tx);
+  position: relative;
+  overflow: hidden;
+}
+.project-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--brand-color, var(--primary));
+  transition: width var(--tx);
+}
+.project-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-strong);
+}
+.project-card:hover::before { width: 6px; }
+.project-card-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-bottom: var(--space-3);
+  flex-wrap: wrap;
+}
+.project-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--primary);
+}
+.project-domain {
+  font-size: 0.78rem;
+  color: var(--soft);
+  font-family: "JetBrains Mono", "SF Mono", Monaco, monospace;
+}
+.project-desc {
+  color: var(--text);
+  margin-bottom: var(--space-4);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+.project-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--border);
+}
+.project-stats strong { color: var(--text); font-weight: 600; }
+
+/* === About === */
+.about-text {
+  color: var(--text);
+  font-size: 1rem;
+  line-height: 1.8;
+}
+.about-text p { margin-bottom: var(--space-4); }
+.about-text p:last-child { margin-bottom: 0; }
+
+/* === Footer === */
+footer {
+  background: var(--primary);
+  color: rgba(255,255,255,0.85);
+  padding: var(--space-10) 0;
+  margin-top: var(--space-16);
+  font-size: 0.9rem;
+}
+footer a { color: rgba(255,255,255,0.95); text-decoration: underline; text-decoration-color: rgba(255,255,255,0.4); }
+footer a:hover { text-decoration-color: white; }
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-8);
+}
+.footer-grid h3 {
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: var(--space-3);
+  font-weight: 600;
+}
+.footer-list { list-style: none; line-height: 2; }
+.footer-credit {
+  margin-top: var(--space-8);
+  padding-top: var(--space-6);
+  border-top: 1px solid rgba(255,255,255,0.15);
+  text-align: center;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.6);
+}
+
+/* === Responsive === */
+@media (max-width: 640px) {
+  .hero { padding: var(--space-10) 0 var(--space-8); }
+  .section { padding: var(--space-10) 0; }
+  .footer-grid { grid-template-columns: 1fr; gap: var(--space-6); }
+}
+</style>
 </head>
 <body>
-  <main>
-    <section class="card">
-      <div class="tag">고려대 AI 융합대학원</div>
-      <div class="tag">Research & Systems</div>
-      <h1>최경찬</h1>
-      <p>논문 리서치, 자동화, 개인 인프라를 정리하는 포트폴리오 페이지입니다.</p>
-      <p>현재 작업 중인 주제:</p>
-      <ul>
-        <li>Nextcloud / Tailscale 기반 개인 클라우드</li>
-        <li>Claude Code 메모리 동기화</li>
-        <li>졸업논문 리서치 자료 정리</li>
-      </ul>
-      <p>공개 자료와 개인 자료는 분리해 관리합니다.</p>
-    </section>
-  </main>
+
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="eyebrow">고려대 SW·AI 융합대학원 석사과정생</div>
+    <h1>
+      최경찬
+      <span class="name-en">Kyung-Chan Choi</span>
+    </h1>
+    <div class="role">AI 대학원생 · 학습 도구·인텔리전스 사이트 빌드 중</div>
+
+    <div class="interests">
+      <span class="interest-chip">🤖 LLM</span>
+      <span class="interest-chip">🔬 AI4Science</span>
+      <span class="interest-chip">🎨 Multimodal</span>
+      <span class="interest-chip">🎮 RL (관심 중)</span>
+    </div>
+
+    <div class="contacts">
+      <a href="mailto:repairer5812@gmail.com">📧 repairer5812@gmail.com</a>
+      <a href="tel:+821028753705">📱 010-2875-3705</a>
+      <a href="https://github.com/repairer5812" target="_blank" rel="noopener">🐙 GitHub</a>
+    </div>
+  </div>
+</section>
+
+<main>
+
+<section class="section" id="about">
+  <div class="container">
+    <header class="section-head">
+      <div class="eyebrow">About</div>
+      <h2>소개</h2>
+    </header>
+    <div class="about-text">
+      <p>
+        AI 대학원에서 <strong>LLM, AI4Science, 멀티모달</strong>을 공부하면서 학습 도구·연구 인텔리전스 사이트를 직접 만들고 있습니다.
+        교육 도메인의 응용을 좋아하고, 막연한 트렌드 보다 <strong>객관 지표</strong>(학회 게재·인용수·코드 공개)로 검증된 자료를 선호합니다.
+      </p>
+      <p>
+        현재 <em>학교·모바일 유휴 컴퓨팅 풀링 LLM</em>을 졸업논문 주제로 잡고 좁히는 중.
+        선행연구 64편 검토 후 측정 스터디 + Preemption-aware 스케줄러 하이브리드를 잠정 방향으로 검토하고 있습니다.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="projects">
+  <div class="container">
+    <header class="section-head">
+      <div class="eyebrow">Projects · Live</div>
+      <h2>만든 사이트</h2>
+      <p class="desc">현재 라이브 운영 중. 카드 클릭으로 이동.</p>
+    </header>
+
+    <div class="projects">
+
+      <a class="project-card" href="https://repairer5812.github.io/thesis-research/" target="_blank" rel="noopener" style="--brand-color: #1e2a4a;">
+        <div class="project-card-head">
+          <div class="project-name">📚 Thesis Research Intelligence</div>
+          <div class="project-domain">/thesis-research/</div>
+        </div>
+        <div class="project-desc">
+          국내 16개 AI 대학원 석사논문 <strong>2,906건</strong> 통합 분석.
+          학회 게재(NeurIPS/ICML/ICLR/ACL/CVPR)·인용수·코드 공개 검증으로 <strong>192편</strong>에 객관 점수 부여.
+          학교별·일반/특수대학원·분야별 필터로 졸업논문 주제 결정에 활용.
+        </div>
+        <div class="project-stats">
+          <span>🎓 <strong>16</strong>개 학교</span>
+          <span>📊 <strong>2,906</strong>건 학위논문</span>
+          <span>🏆 S-tier <strong>25+</strong></span>
+          <span>⚙️ Vanilla JS · Chart.js</span>
+        </div>
+      </a>
+
+      <a class="project-card" href="https://repairer5812.github.io/ai-study-hub/" target="_blank" rel="noopener" style="--brand-color: #8b1538;">
+        <div class="project-card-head">
+          <div class="project-name">🎯 AI Study Hub</div>
+          <div class="project-domain">/ai-study-hub/</div>
+        </div>
+        <div class="project-desc">
+          기계학습 중간고사 대비 모의고사 사이트. <strong>Week 2~7</strong>의 핵심 개념을 묻는 <strong>150문제 · 5세트</strong> 구성.
+          서술형 답안은 LLM(Upstage Solar) 기반 채점 백엔드(Cloudflare Worker)로 자동 평가, 실시간 랭킹.
+        </div>
+        <div class="project-stats">
+          <span>📝 <strong>150</strong>문제 · <strong>5</strong>세트</span>
+          <span>🤖 LLM 자동 채점</span>
+          <span>🏅 실시간 랭킹</span>
+          <span>⚙️ Cloudflare Worker · Upstage Solar</span>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h3>Contact</h3>
+        <ul class="footer-list">
+          <li>📧 <a href="mailto:repairer5812@gmail.com">repairer5812@gmail.com</a></li>
+          <li>📱 <a href="tel:+821028753705">010-2875-3705</a></li>
+          <li>🐙 <a href="https://github.com/repairer5812" target="_blank" rel="noopener">github.com/repairer5812</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Affiliation</h3>
+        <ul class="footer-list">
+          <li>고려대학교 SW·AI 융합대학원</li>
+          <li>석사과정생 · 61기</li>
+          <li>관심: LLM · AI4Science · Multimodal</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-credit">
+      © 2026 최경찬 · Built with Claude Code · 한국어 / 학술 비영리
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
