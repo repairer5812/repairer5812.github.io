@@ -1,0 +1,54 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import '../../styles/blog.css';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const fmt = (d: Date) =>
+  `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+---
+
+<Base
+  activeNav="blog"
+  title="글 · 최경찬"
+  description="만들면서 이해한 것들의 기록. LLM, 멀티모달, 졸업논문으로 좁혀가는 과정을 적습니다."
+>
+  <section class="section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>글</h2>
+        <p class="sec-note">읽고 만든 것을 객관 지표로 검증해 남기는 기록입니다.</p>
+      </div>
+
+      {posts.length === 0 ? (
+        <p class="blog-empty">아직 발행한 글이 없습니다. 곧 채워집니다.</p>
+      ) : (
+        <ul class="blog-list">
+          {posts.map((post, i) => (
+            <li class="blog-item reveal" style={`--d:${0.05 * (i + 1)}s`}>
+              <a class="blog-link" href={`/blog/${post.id}`}>
+                <div class="blog-item-head">
+                  <h3 class="blog-item-title">{post.data.title}</h3>
+                  {post.data.summary && (
+                    <p class="blog-item-summary">{post.data.summary}</p>
+                  )}
+                  {post.data.tags.length > 0 && (
+                    <div class="blog-item-tags">
+                      {post.data.tags.map((t) => <span class="chip">{t}</span>)}
+                    </div>
+                  )}
+                </div>
+                <time class="blog-item-date" datetime={post.data.date.toISOString()}>
+                  {fmt(post.data.date)}
+                </time>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </section>
+</Base>

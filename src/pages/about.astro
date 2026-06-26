@@ -1,0 +1,182 @@
+---
+import Base from '../layouts/Base.astro';
+import resume from '../data/resume.json';
+
+const title = `소개 · ${resume.name} ${resume.nameEn}`;
+const description = `${resume.name} · ${resume.affiliation}. ${resume.thesis.topic}을 졸업논문 주제로 좁히는 중.`;
+---
+
+<Base title={title} description={description} activeNav="about">
+  <!-- ===== Page head ===== -->
+  <section class="wrap page-head">
+    <span class="status reveal"><span class="pulse" aria-hidden="true"></span>{resume.affiliation}</span>
+    <h1 class="reveal" style="--d:.05s">소개 · 이력<span class="name-en">{resume.nameEn} · {resume.name}</span></h1>
+    <p class="page-lead reveal" style="--d:.12s">{resume.summary}</p>
+    <div class="head-contact reveal" style="--d:.18s">
+      <a href={`mailto:${resume.contact.email}`}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        <span class="mono">{resume.contact.email}</span>
+      </a>
+      <a href={resume.contact.githubUrl} target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.5v-2c-3.2.7-3.9-1.4-3.9-1.4-.5-1.3-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.6.8.5 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>
+        <span class="mono">{resume.contact.github}</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- ===== 관심 분야 ===== -->
+  <section class="section" id="interests">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>관심 분야</h2>
+        <p class="sec-note">공부하며 좁혀 가는 네 방향.</p>
+      </div>
+      <div class="card-grid reveal">
+        {resume.interests.map((it) => (
+          <article class="info-card">
+            <h3 class="mono">{it.name}</h3>
+            <p>{it.desc}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 역량 · 학력 ===== -->
+  <section class="section" id="skills">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>역량과 학력</h2>
+        <p class="sec-note">직접 만들며 익힌 도구 위주.</p>
+      </div>
+      <div class="two-col">
+        <div class="reveal">
+          <h3 class="block-label">역량</h3>
+          <dl class="skills">
+            {resume.skills.map((s) => (
+              <div class="skill-row">
+                <dt>{s.group}</dt>
+                <dd>{s.items.map((i) => <span class="chip">{i}</span>)}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+        <div class="reveal" style="--d:.08s">
+          <h3 class="block-label">학력</h3>
+          {resume.education.map((e) => (
+            <article class="edu-card">
+              <h4>{e.school}</h4>
+              <p class="edu-meta mono">{e.program} · {e.status}</p>
+              <p class="edu-field">{e.field}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 연구 방향 ===== -->
+  <section class="section" id="thesis">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>연구 방향</h2>
+        <p class="sec-note">졸업논문으로 향하는 잠정 주제.</p>
+      </div>
+      <div class="thesis-note reveal" style="max-width:72ch;">
+        <span class="thesis-label">현재 졸업논문 방향 · {resume.thesis.status}</span>
+        <p><em>{resume.thesis.topic}</em></p>
+        <p style="margin-top:0.6rem;font-weight:600;">{resume.thesis.desc}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== 만든 프로젝트 ===== -->
+  <section class="section" id="projects">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>만든 프로젝트</h2>
+        <p class="sec-note">지금 라이브로 운영 중인 것들.</p>
+      </div>
+      <div class="proj-list">
+        {resume.projects.map((p, i) => (
+          <article class="info-card proj-item reveal" style={`--d:${0.06 * (i + 1)}s`}>
+            <h3><a href={p.url}>{p.name} <span class="arrow" aria-hidden="true">↗</span></a></h3>
+            <div class="proj-path mono">{p.url}</div>
+            <p>{p.summary}</p>
+            <div class="item-tags">
+              {p.tags.map((t) => <span class="chip">{t}</span>)}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .name-en {
+    display: block; font-family: var(--mono); font-weight: 500;
+    font-size: clamp(0.9rem, 1.3vw, 1.02rem); letter-spacing: 0.02em;
+    color: var(--muted); margin-top: 0.75rem;
+  }
+  .page-head .status { margin-bottom: var(--s4); }
+
+  .head-contact { display: flex; flex-wrap: wrap; gap: var(--s5); margin-top: var(--s5); font-size: 0.92rem; }
+  .head-contact a { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--ink-2); font-weight: 600; }
+  .head-contact a:hover { color: var(--accent); }
+  .head-contact svg { width: 16px; height: 16px; opacity: 0.85; }
+  .head-contact .mono { font-family: var(--mono); font-size: 0.86rem; }
+
+  /* 관심 분야 + 프로젝트 카드 */
+  .card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s4); }
+  .info-card {
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--r);
+    padding: clamp(1.1rem, 2.4vw, 1.6rem);
+    transition: border-color 0.25s var(--ease), transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  }
+  .info-card:hover { border-color: var(--border-strong); transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+  @media (prefers-reduced-motion: reduce) { .info-card:hover { transform: none; } }
+  .info-card h3 { font-size: 1.08rem; font-weight: 750; letter-spacing: -0.01em; color: var(--ink); }
+  .info-card h3.mono { font-family: var(--mono); font-weight: 600; letter-spacing: 0; font-size: 1rem; color: var(--accent-strong); }
+  .info-card p { margin-top: 0.5rem; color: var(--ink-2); font-size: 0.95rem; line-height: 1.6; text-wrap: pretty; }
+
+  /* 역량 · 학력 두 칸 */
+  .two-col { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr); gap: clamp(1.5rem, 4vw, 3rem); }
+  .block-label {
+    font-family: var(--mono); font-size: 0.76rem; font-weight: 600; letter-spacing: 0.04em;
+    color: var(--accent-strong); margin-bottom: var(--s4);
+  }
+  .skills { display: flex; flex-direction: column; gap: var(--s4); }
+  .skill-row { display: grid; grid-template-columns: minmax(0, 0.55fr) minmax(0, 1fr); gap: var(--s4); align-items: start; }
+  .skill-row dt { font-weight: 700; color: var(--ink); font-size: 0.92rem; padding-top: 0.18rem; }
+  .skill-row dd { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+  .edu-card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: var(--r);
+    padding: var(--s4) var(--s5);
+  }
+  .edu-card h4 { font-size: 1.02rem; font-weight: 750; letter-spacing: -0.01em; color: var(--ink); }
+  .edu-card .edu-meta { font-size: 0.8rem; color: var(--accent-strong); margin-top: 0.35rem; }
+  .edu-card .edu-field { font-size: 0.92rem; color: var(--ink-2); margin-top: 0.4rem; }
+
+  /* thesis */
+  .thesis-note p { margin: 0; }
+  .thesis-note em { font-style: normal; color: var(--ink); font-weight: 750; font-size: 1.05rem; }
+
+  /* 프로젝트 리스트 */
+  .proj-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s4); }
+  .proj-item h3 { font-size: 1.12rem; font-weight: 750; letter-spacing: -0.015em; }
+  .proj-item h3 a { color: var(--ink); display: inline-flex; align-items: center; gap: 0.4rem; }
+  .proj-item h3 a:hover { color: var(--accent); }
+  .proj-item h3 .arrow { color: var(--muted); transition: transform 0.25s var(--ease); display: inline-block; }
+  .proj-item:hover h3 .arrow { transform: translate(3px, -3px); color: var(--accent); }
+  .proj-item .proj-path { font-family: var(--mono); font-size: 0.76rem; color: var(--muted); margin-top: 0.3rem; }
+  .item-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: var(--s4); }
+
+  @media (max-width: 760px) {
+    .card-grid { grid-template-columns: 1fr; }
+    .proj-list { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; gap: var(--s6); }
+    .skill-row { grid-template-columns: 1fr; gap: var(--s2); }
+  }
+</style>

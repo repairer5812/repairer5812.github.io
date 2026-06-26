@@ -1,0 +1,38 @@
+---
+/**
+ * SiteFooter — 다크 푸터. 연락처 + 소속(학업만).
+ * 공개 배포 정책: 회사(테크빌) 비노출, 학업 소속만 표기.
+ */
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="fb-name">최경찬<span class="accent-stop">.</span></div>
+        <p>학습 도구와 연구 인텔리전스를 만드는 AI 대학원생. 곧 글·자료·강의 링크가 이곳에 쌓입니다.</p>
+      </div>
+      <div class="footer-col">
+        <h4>연락</h4>
+        <ul>
+          <li><a href="mailto:repairer5812@gmail.com">repairer5812@gmail.com</a></li>
+          <li><a href="tel:+821028753705">010-2875-3705</a></li>
+          <li><a href="https://github.com/repairer5812" target="_blank" rel="noopener">github.com/repairer5812</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>소속</h4>
+        <ul>
+          <li class="plain">고려대학교 SW·AI 융합대학원</li>
+          <li class="plain">석사과정생 · 61기</li>
+          <li class="plain">LLM · AI4Science · Multimodal</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© {year} 최경찬 · 한국어 / 학술 비영리</span>
+      <span class="mono">Built with Claude Code</span>
+    </div>
+  </div>
+</footer>

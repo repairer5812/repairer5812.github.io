@@ -1,0 +1,282 @@
+/* ============================================================
+   blog.css — 블로그 전용. 글 목록 + prose 본문 + 댓글 + 임베드.
+   global.css의 디자인 토큰(:root)을 그대로 사용.
+   이 파일은 블로그 페이지(/blog, /blog/[slug])에서만 import.
+   ============================================================ */
+
+/* ---------- 글 목록 (/blog) ---------- */
+.blog-list {
+  list-style: none;
+  display: grid;
+  gap: var(--s2);
+  margin-top: var(--s6);
+}
+.blog-item {
+  border-top: 1px solid var(--border);
+}
+.blog-item:last-child { border-bottom: 1px solid var(--border); }
+.blog-link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--s3) var(--s5);
+  align-items: baseline;
+  padding: clamp(1.1rem, 2.4vw, 1.6rem) var(--s2);
+  color: var(--ink);
+  transition: background 0.25s var(--ease);
+}
+.blog-link:hover { color: var(--ink); background: var(--accent-tint); }
+.blog-link:hover .blog-item-title { color: var(--accent-strong); }
+.blog-item-head { min-width: 0; }
+.blog-item-title {
+  font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+  font-weight: 760;
+  letter-spacing: -0.022em;
+  line-height: 1.3;
+  word-break: keep-all;
+  transition: color 0.2s var(--ease);
+}
+.blog-item-summary {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.65;
+  word-break: keep-all;
+  max-width: 60ch;
+}
+.blog-item-date {
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  color: var(--muted);
+  white-space: nowrap;
+  justify-self: end;
+}
+.blog-item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.7rem;
+}
+.blog-empty {
+  margin-top: var(--s6);
+  color: var(--muted);
+  font-weight: 600;
+}
+
+/* ---------- 글 본문 헤더 ---------- */
+.post-header {
+  padding-top: clamp(2.5rem, 6vw, 4rem);
+  padding-bottom: clamp(1.5rem, 3vw, 2.2rem);
+  border-bottom: 1px solid var(--border);
+}
+.post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.post-back:hover { color: var(--accent); }
+.post-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem var(--s4);
+  margin-top: var(--s5);
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.post-title {
+  margin-top: var(--s3);
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  font-weight: 820;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  text-wrap: balance;
+  word-break: keep-all;
+}
+.post-summary {
+  margin-top: var(--s4);
+  color: var(--ink-2);
+  font-size: clamp(1.02rem, 1.4vw, 1.15rem);
+  font-weight: 600;
+  line-height: 1.65;
+  word-break: keep-all;
+  max-width: 62ch;
+}
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: var(--s5);
+}
+
+/* ---------- prose 본문 ---------- */
+.prose {
+  max-width: 70ch;
+  margin: clamp(2rem, 4vw, 3rem) 0;
+  font-size: clamp(1.02rem, 0.98rem + 0.2vw, 1.1rem);
+  line-height: 1.8;
+  color: var(--ink);
+  font-weight: 600;
+}
+.prose > * + * { margin-top: 1.35em; }
+
+.prose h2 {
+  margin-top: 2.4em;
+  font-size: clamp(1.35rem, 2.2vw, 1.7rem);
+  font-weight: 780;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  word-break: keep-all;
+}
+.prose h3 {
+  margin-top: 2em;
+  font-size: clamp(1.15rem, 1.8vw, 1.35rem);
+  font-weight: 760;
+  letter-spacing: -0.02em;
+  word-break: keep-all;
+}
+.prose h2 + *, .prose h3 + * { margin-top: 0.7em; }
+
+.prose p { word-break: keep-all; }
+.prose strong, .prose b { color: var(--ink); font-weight: 760; }
+.prose em { font-style: italic; }
+
+.prose a {
+  color: var(--accent-strong);
+  text-decoration: underline;
+  text-decoration-color: var(--accent-line);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1.5px;
+  transition: color 0.2s var(--ease), text-decoration-color 0.2s var(--ease);
+}
+.prose a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+.prose ul, .prose ol { padding-left: 1.4em; }
+.prose li + li { margin-top: 0.5em; }
+.prose li { word-break: keep-all; }
+.prose ul li::marker { color: var(--accent); }
+.prose ol li::marker { color: var(--muted); font-family: var(--mono); font-size: 0.9em; }
+
+.prose blockquote {
+  margin-inline: 0;
+  padding: 0.4em 0 0.4em 1.2em;
+  border-left: 3px solid var(--accent);
+  color: var(--ink-2);
+  background: var(--accent-tint);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+}
+.prose blockquote p { margin: 0; }
+
+/* inline code */
+.prose :not(pre) > code {
+  font-family: var(--mono);
+  font-size: 0.86em;
+  color: var(--accent-strong);
+  background: var(--accent-tint);
+  border: 1px solid var(--accent-line);
+  padding: 0.12em 0.4em;
+  border-radius: 6px;
+  word-break: break-all;
+}
+
+/* code block (Astro/Shiki는 pre에 인라인 배경을 넣음 → 테두리/패딩만 보강) */
+.prose pre {
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  line-height: 1.7;
+  padding: var(--s4) var(--s5);
+  border-radius: var(--r);
+  border: 1px solid var(--border-strong);
+  box-shadow: var(--shadow-sm);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.prose pre code {
+  font-family: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font-size: inherit;
+}
+
+.prose hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin-block: 2.4em;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--r);
+  border: 1px solid var(--border);
+}
+
+/* table */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.prose th, .prose td {
+  text-align: left;
+  padding: 0.6em 0.9em;
+  border-bottom: 1px solid var(--border);
+  word-break: keep-all;
+}
+.prose thead th {
+  font-weight: 760;
+  color: var(--ink);
+  background: var(--panel);
+  border-bottom-color: var(--border-strong);
+}
+.prose tbody tr:hover { background: var(--panel); }
+
+/* ---------- 반응형 임베드 (YouTube 등) ---------- */
+.yt-embed {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-block: 1.6em;
+  border-radius: var(--r);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--panel);
+}
+.yt-embed iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ---------- 댓글 (Giscus) ---------- */
+.comments {
+  margin-top: clamp(2.5rem, 5vw, 4rem);
+  padding-top: clamp(2rem, 4vw, 3rem);
+  border-top: 1px solid var(--border);
+}
+.comments-title {
+  font-size: clamp(1.2rem, 2vw, 1.45rem);
+  font-weight: 780;
+  letter-spacing: -0.02em;
+  margin-bottom: var(--s5);
+}
+
+/* ---------- 모바일 ---------- */
+@media (max-width: 640px) {
+  .blog-link {
+    grid-template-columns: 1fr;
+    gap: var(--s2);
+  }
+  .blog-item-date { justify-self: start; }
+}

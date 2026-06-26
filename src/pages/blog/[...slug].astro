@@ -1,0 +1,51 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+import Comments from '../../components/Comments.astro';
+import '../../styles/blog.css';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const fmt = (d: Date) =>
+  `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+---
+
+<Base
+  activeNav="blog"
+  title={`${post.data.title} · 최경찬`}
+  description={post.data.summary ?? post.data.title}
+>
+  <article class="wrap">
+    <header class="post-header">
+      <a class="post-back" href="/blog">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+        글 목록
+      </a>
+      <div class="post-meta">
+        <time datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>
+      </div>
+      <h1 class="post-title">{post.data.title}</h1>
+      {post.data.summary && <p class="post-summary">{post.data.summary}</p>}
+      {post.data.tags.length > 0 && (
+        <div class="post-tags">
+          {post.data.tags.map((t) => <span class="chip">{t}</span>)}
+        </div>
+      )}
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <Comments />
+  </article>
+</Base>

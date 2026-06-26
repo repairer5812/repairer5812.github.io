@@ -1,0 +1,58 @@
+[
+  {
+    "title": "Let's build GPT: from scratch, in code, spelled out",
+    "url": "https://www.youtube.com/watch?v=kCc8FmEb1nY",
+    "category": "강의",
+    "note": "Andrej Karpathy가 nanoGPT를 한 줄씩 직접 짜며 트랜스포머와 셀프어텐션을 설명. LLM 내부를 코드로 이해하기에 가장 좋은 출발점.",
+    "tags": ["Transformer", "LLM", "Karpathy"]
+  },
+  {
+    "title": "MIT 18.06 Linear Algebra (Gilbert Strang)",
+    "url": "https://www.youtube.com/playlist?list=PL49CF3715CB9EF31D",
+    "category": "강의",
+    "note": "Strang 교수의 고전 선형대수 강의. 행공간·열공간·고윳값을 직관 중심으로 풀어, 선형대수 강좌 준비에 기준으로 삼는 자료.",
+    "tags": ["Linear Algebra", "MIT", "기초"]
+  },
+  {
+    "title": "Stanford CS25: Transformers United",
+    "url": "https://www.youtube.com/playlist?list=PLoROMvodv4rNiJRchCzutFw5ItR_Z27CM",
+    "category": "강의",
+    "note": "트랜스포머 계열 연구를 저자 초청 세미나로 다루는 스탠퍼드 강좌. 멀티모달·스케일링 등 최신 흐름을 한 학기에 조망.",
+    "tags": ["Transformer", "Multimodal", "Stanford"]
+  },
+  {
+    "title": "Attention Is All You Need",
+    "url": "https://arxiv.org/abs/1706.03762",
+    "category": "논문",
+    "note": "트랜스포머 구조를 처음 제시한 원전. 셀프어텐션만으로 순환·합성곱을 대체. 이후 거의 모든 LLM의 기반이 됨.",
+    "tags": ["Transformer", "Attention", "NeurIPS 2017"]
+  },
+  {
+    "title": "Learning Transferable Visual Models From Natural Language Supervision (CLIP)",
+    "url": "https://arxiv.org/abs/2103.00020",
+    "category": "논문",
+    "note": "이미지와 텍스트를 같은 임베딩 공간에 정렬한 멀티모달 대조학습. Vision-Language 연구의 사실상 출발점으로, 관심 분야와 직접 맞닿음.",
+    "tags": ["Multimodal", "Vision-Language", "CLIP"]
+  },
+  {
+    "title": "Chain-of-Thought Prompting Elicits Reasoning in Large Language Models",
+    "url": "https://arxiv.org/abs/2201.11903",
+    "category": "논문",
+    "note": "중간 추론 단계를 유도하면 LLM의 다단계 추론 성능이 크게 오른다는 결과. 프롬프트 설계와 평가를 볼 때 자주 되돌아보는 기준 논문.",
+    "tags": ["Reasoning", "Prompting", "LLM"]
+  },
+  {
+    "title": "Hugging Face Transformers",
+    "url": "https://github.com/huggingface/transformers",
+    "category": "도구",
+    "note": "사전학습 모델 로딩·파인튜닝·추론을 표준화한 라이브러리. 논문 구현을 빠르게 재현하고 실험할 때 기본으로 사용.",
+    "tags": ["Library", "PyTorch", "오픈소스"]
+  },
+  {
+    "title": "Papers with Code",
+    "url": "https://paperswithcode.com/",
+    "category": "도구",
+    "note": "논문과 공개 코드·벤치마크·SOTA를 연결한 인덱스. 코드 공개 여부와 재현성을 빠르게 확인하는 데 활용.",
+    "tags": ["벤치마크", "재현성", "리서치"]
+  }
+]

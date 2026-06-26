@@ -1,0 +1,64 @@
+name: Update projects.json
+
+# "만든 것" 섹션을 GitHub 공개 저장소에서 주 1회 자동 최신화한다.
+# index.astro 는 src/data/projects.json 을 그대로 렌더하므로,
+# 이 워크플로는 오직 그 JSON 만 런타임에 생성/갱신한다.
+# (index.astro · projects.json 원본은 사람이 건드리지 않는다 — 변경 시 이 워크플로가 덮어씀)
+
+on:
+  schedule:
+    # 매주 월요일 00:17 UTC (KST 월 09:17)
+    - cron: '17 0 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-projects
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout (astro-hub)
+        uses: actions/checkout@v4
+        with:
+          ref: astro-hub
+
+      - name: Fetch public repos via gh api
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # repairer5812 공개 저장소 전체를 페이지네이션으로 수집한다.
+          # name / description / pushed_at(updated) / stargazers / topics / 핀 여부 판단용 필드 추출.
+          gh api \
+            -H "Accept: application/vnd.github+json" \
+            --paginate \
+            'users/repairer5812/repos?per_page=100&type=public&sort=pushed' \
+            --jq '[ .[] | select(.fork == false and .archived == false) | {
+                     name: .name,
+                     description: .description,
+                     pushedAt: .pushed_at,
+                     stargazers: .stargazers_count,
+                     topics: (.topics // []),
+                     isTemplate: .is_template
+                   } ]' \
+            | jq -s 'add' > /tmp/repos.json
+          echo "Fetched repo count: $(jq 'length' /tmp/repos.json)"
+
+      - name: Build src/data/projects.json
+        run: node .github/scripts/build-projects.mjs /tmp/repos.json src/data/projects.json
+
+      - name: Commit & push if changed
+        run: |
+          if git diff --quiet -- src/data/projects.json; then
+            echo "No change in projects.json — skipping commit."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/projects.json
+          git commit -m "chore: auto-update projects.json from GitHub repos"
+          git push origin astro-hub

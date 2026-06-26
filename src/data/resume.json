@@ -1,0 +1,76 @@
+{
+  "name": "최경찬",
+  "nameEn": "Kyungchan Choi",
+  "affiliation": "고려대 SW·AI 융합대학원 석사과정 61기",
+  "summary": "교육 도메인의 응용을 좋아하는 빌더이자 AI 대학원생입니다. LLM, AI4Science, 멀티모달을 공부하면서 직접 쓰는 학습 도구와 연구 인텔리전스 사이트를 만듭니다. 막연한 트렌드보다 학회 게재·인용수·코드 공개 같은 객관 지표로 검증된 자료를 선호합니다.",
+  "interests": [
+    {
+      "name": "LLM",
+      "desc": "대규모 언어모델의 학습·추론·평가, 그리고 학습 도구로의 응용."
+    },
+    {
+      "name": "AI4Science",
+      "desc": "과학·연구 데이터에 AI를 적용해 가설 검증과 분석을 돕는 방향."
+    },
+    {
+      "name": "Multimodal",
+      "desc": "Vision-Language 등 여러 양식을 함께 다루는 모델."
+    },
+    {
+      "name": "RL",
+      "desc": "강화학습. 현재 관심을 넓혀 가는 중인 분야."
+    }
+  ],
+  "education": [
+    {
+      "school": "고려대학교 SW·AI 융합대학원",
+      "program": "석사과정 (61기)",
+      "field": "LLM·생성형 AI, 멀티모달",
+      "status": "재학 중"
+    }
+  ],
+  "skills": [
+    {
+      "group": "언어·런타임",
+      "items": ["Python", "JavaScript", "TypeScript"]
+    },
+    {
+      "group": "AI·ML",
+      "items": ["LLM 응용", "프롬프트·평가 설계", "데이터 수집·분석"]
+    },
+    {
+      "group": "웹·배포",
+      "items": ["Astro", "Vanilla JS", "Chart.js", "Cloudflare Workers", "GitHub Pages"]
+    }
+  ],
+  "thesis": {
+    "topic": "학교·모바일 유휴 컴퓨팅 풀링 LLM",
+    "desc": "학교와 모바일 기기의 유휴 컴퓨팅 자원을 모아 LLM 워크로드를 돌리는 방향을 연구 주제로 좁히는 중입니다. 선행연구를 검토한 뒤 측정 스터디와 Preemption-aware 스케줄러 하이브리드를 잠정 방향으로 보고 있습니다.",
+    "status": "주제 좁히는 중"
+  },
+  "projects": [
+    {
+      "name": "Thesis Research Intelligence",
+      "url": "/thesis-research/",
+      "summary": "국내 16개 AI 대학원 석사논문 2,906건을 통합 분석. 학회 게재·인용수·코드 공개를 검증해 192편에 객관 점수를 부여하고, 학교별·분야별 필터로 졸업논문 주제 결정에 활용합니다.",
+      "tags": ["Vanilla JS", "Chart.js", "GitHub Pages"]
+    },
+    {
+      "name": "AI Study Hub",
+      "url": "/ai-study-hub/",
+      "summary": "AI 대학원 과목별 복습 노트와 모의고사를 모은 학습 허브. 4과목 270문항 이상, 서술형은 LLM 채점 백엔드(Cloudflare Worker)로 자동 평가합니다.",
+      "tags": ["LLM 자동채점", "Cloudflare Worker", "실시간 랭킹"]
+    },
+    {
+      "name": "인공지능 전공자를 위한 선형대수학",
+      "url": "/linear-algebra-for-ai/",
+      "summary": "AI 대학원생 대상 25회차 선형대수 강좌의 안내·진단 사이트. 6축 진단 테스트(20문항)를 본 뒤 육각형 레이더 차트로 본인 역량을 확인합니다.",
+      "tags": ["25회차", "6축 진단", "레이더 차트"]
+    }
+  ],
+  "contact": {
+    "email": "repairer5812@gmail.com",
+    "github": "github.com/repairer5812",
+    "githubUrl": "https://github.com/repairer5812"
+  }
+}

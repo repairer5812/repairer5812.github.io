@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Thesis Research Intelligence",
+    "url": "/thesis-research/",
+    "desc": "국내 <b>16개 AI 대학원</b> 석사논문 <b>2,906건</b>을 통합 분석. 학회 게재(NeurIPS, ICML, ICLR, ACL, CVPR), 인용수, 코드 공개를 검증해 <b>192편</b>에 객관 점수를 부여하고, 학교별·일반/특수대학원·분야별 필터로 졸업논문 주제 결정에 활용합니다.",
+    "tags": ["Vanilla JS", "Chart.js", "GitHub Pages"],
+    "featured": true
+  },
+  {
+    "name": "AI Study Hub",
+    "url": "/ai-study-hub/",
+    "desc": "AI 대학원 과목별 복습 노트와 모의고사를 한곳에 모은 학습 허브. <b>기계학습, 딥러닝, 자료구조, 인공지능 보안기술</b> 4과목, 총 <b>270문항 이상</b>. 객관식·서술형이 섞이며, 서술형은 LLM(Upstage Solar) 채점 백엔드(Cloudflare Worker)로 자동 평가하고 실시간 랭킹을 제공합니다.",
+    "tags": ["4과목 ml·dl·ds·sec", "LLM 자동채점", "실시간 랭킹", "Cloudflare Worker", "Upstage Solar"],
+    "featured": false
+  },
+  {
+    "name": "인공지능 전공자를 위한 선형대수학",
+    "url": "/linear-algebra-for-ai/",
+    "desc": "AI 대학원생 대상 <b>25회차(Part 1, Part 2)</b> 선형대수 강좌의 안내·진단 사이트. Strang 교재 기준 <b>순수 LA 6축 진단 테스트(객관식 20문항)</b>를 본 뒤 육각형 레이더 차트로 본인 역량을 확인합니다.",
+    "tags": ["25회차", "6축 진단", "20문항", "레이더 차트"],
+    "featured": false
+  }
+]

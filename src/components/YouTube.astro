@@ -1,0 +1,23 @@
+---
+/**
+ * YouTube — 반응형(16:9) 유튜브 임베드.
+ * 프라이버시 강화 도메인(youtube-nocookie) + lazy 로딩.
+ * 사용: <YouTube id="aircAruvnKk" title="설명" />
+ * .yt-embed 스타일은 src/styles/blog.css 에 정의(블로그 페이지에서만 import).
+ */
+interface Props {
+  id: string;
+  title?: string;
+}
+const { id, title = 'YouTube 영상' } = Astro.props;
+---
+
+<div class="yt-embed">
+  <iframe
+    src={`https://www.youtube-nocookie.com/embed/${id}`}
+    title={title}
+    loading="lazy"
+    referrerpolicy="strict-origin-when-cross-origin"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen></iframe>
+</div>
