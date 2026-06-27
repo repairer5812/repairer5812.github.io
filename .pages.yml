@@ -1,0 +1,68 @@
+# Pages CMS 설정 (app.pagescms.org 에서 이 저장소를 편집)
+# 블로그 글(WYSIWYG)과 자료 큐레이션을 브라우저에서 편집 → main에 자동 커밋 → 사이트 재배포
+
+media:
+  input: public/images        # 업로드된 이미지가 저장되는 저장소 폴더
+  output: /images             # 사이트에서 접근하는 공개 경로
+  extensions: [png, jpg, jpeg, gif, webp, svg, avif]
+
+content:
+  - name: blog
+    label: 글
+    type: collection
+    path: src/content/blog
+    filename: '{year}-{month}-{day}-{fields.title}.md'
+    view:
+      fields: [title, date, draft]
+    fields:
+      - name: title
+        label: 제목
+        type: string
+        required: true
+      - name: date
+        label: 날짜
+        type: date
+        required: true
+        options:
+          format: 'yyyy-MM-dd'
+      - name: summary
+        label: 요약
+        type: text
+      - name: tags
+        label: 태그
+        type: string
+        list: true
+      - name: draft
+        label: 초안(비공개)
+        type: boolean
+        default: false
+      - name: body
+        label: 본문
+        type: rich-text
+
+  - name: resources
+    label: 자료
+    type: file
+    path: src/data/resources.json
+    list: true
+    fields:
+      - name: title
+        label: 제목
+        type: string
+        required: true
+      - name: url
+        label: 링크(URL)
+        type: string
+        required: true
+      - name: category
+        label: 분류
+        type: select
+        options:
+          values: [강의, 논문, 도구]
+      - name: note
+        label: 메모
+        type: text
+      - name: tags
+        label: 태그
+        type: string
+        list: true
