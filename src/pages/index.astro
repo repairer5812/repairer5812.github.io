@@ -46,26 +46,59 @@ const rest = projects.filter((p) => !p.featured);
 
       <div class="hero-art reveal" style="--d:.16s" aria-hidden="true">
         <div class="glow"></div>
-        <svg viewBox="0 0 400 400" role="img" aria-label="분산 유휴 컴퓨팅 노드 모티프">
-          <path class="edge" d="M200 200 L92 96"/>
-          <path class="edge" d="M200 200 L320 110"/>
-          <path class="edge" d="M200 200 L78 250"/>
-          <path class="edge" d="M200 200 L300 300"/>
-          <path class="edge" d="M200 200 L210 64"/>
-          <path class="edge" d="M92 96 L78 250"/>
-          <path class="edge" d="M320 110 L300 300"/>
-          <path class="edge-live" d="M200 200 L92 96"/>
-          <path class="edge-live" d="M200 200 L300 300"/>
-          <path class="edge-live" d="M200 200 L78 250"/>
-          <circle class="node-idle" cx="92" cy="96" r="13"/>
-          <circle class="node-active" cx="320" cy="110" r="9"/>
-          <circle class="node-idle" cx="78" cy="250" r="15"/>
-          <circle class="node-active" cx="300" cy="300" r="10"/>
-          <circle class="node-idle" cx="210" cy="64" r="9"/>
-          <circle class="node-idle" cx="150" cy="330" r="7"/>
-          <circle class="node-active" cx="360" cy="210" r="6"/>
-          <circle class="node-core" cx="200" cy="200" r="22"/>
-          <circle cx="200" cy="200" r="22" fill="none" stroke="var(--accent)" stroke-width="1.5" opacity="0.4"/>
+        <svg viewBox="0 0 400 400" role="img" aria-label="신경망(딥러닝) 순전파 모티프">
+          <line class="edge" x1="60" y1="131" x2="158" y2="108"/>
+          <line class="edge" x1="60" y1="131" x2="158" y2="154"/>
+          <line class="edge" x1="60" y1="131" x2="158" y2="200"/>
+          <line class="edge" x1="60" y1="131" x2="158" y2="246"/>
+          <line class="edge" x1="60" y1="131" x2="158" y2="292"/>
+          <line class="edge" x1="60" y1="177" x2="158" y2="108"/>
+          <line class="edge" x1="60" y1="177" x2="158" y2="154"/>
+          <line class="edge" x1="60" y1="177" x2="158" y2="246"/>
+          <line class="edge" x1="60" y1="177" x2="158" y2="292"/>
+          <line class="edge" x1="60" y1="223" x2="158" y2="108"/>
+          <line class="edge" x1="60" y1="223" x2="158" y2="154"/>
+          <line class="edge" x1="60" y1="223" x2="158" y2="200"/>
+          <line class="edge" x1="60" y1="223" x2="158" y2="246"/>
+          <line class="edge" x1="60" y1="223" x2="158" y2="292"/>
+          <line class="edge" x1="60" y1="269" x2="158" y2="108"/>
+          <line class="edge" x1="60" y1="269" x2="158" y2="154"/>
+          <line class="edge" x1="60" y1="269" x2="158" y2="200"/>
+          <line class="edge" x1="60" y1="269" x2="158" y2="292"/>
+          <line class="edge" x1="158" y1="108" x2="256" y2="154"/>
+          <line class="edge" x1="158" y1="108" x2="256" y2="200"/>
+          <line class="edge" x1="158" y1="108" x2="256" y2="246"/>
+          <line class="edge" x1="158" y1="154" x2="256" y2="154"/>
+          <line class="edge" x1="158" y1="154" x2="256" y2="200"/>
+          <line class="edge" x1="158" y1="154" x2="256" y2="246"/>
+          <line class="edge" x1="158" y1="200" x2="256" y2="154"/>
+          <line class="edge" x1="158" y1="200" x2="256" y2="246"/>
+          <line class="edge" x1="158" y1="246" x2="256" y2="154"/>
+          <line class="edge" x1="158" y1="246" x2="256" y2="200"/>
+          <line class="edge" x1="158" y1="292" x2="256" y2="154"/>
+          <line class="edge" x1="158" y1="292" x2="256" y2="200"/>
+          <line class="edge" x1="158" y1="292" x2="256" y2="246"/>
+          <line class="edge" x1="256" y1="154" x2="350" y2="200"/>
+          <line class="edge-live" x1="60" y1="177" x2="158" y2="200"/>
+          <line class="edge-live" x1="60" y1="269" x2="158" y2="246"/>
+          <line class="edge-live" x1="158" y1="200" x2="256" y2="200"/>
+          <line class="edge-live" x1="158" y1="246" x2="256" y2="246"/>
+          <line class="edge-live" x1="256" y1="200" x2="350" y2="200"/>
+          <line class="edge-live" x1="256" y1="246" x2="350" y2="200"/>
+          <circle class="node-idle" cx="60" cy="131" r="7"/>
+          <circle class="node-idle" cx="60" cy="177" r="7"/>
+          <circle class="node-idle" cx="60" cy="223" r="7"/>
+          <circle class="node-idle" cx="60" cy="269" r="7"/>
+          <circle class="node-idle" cx="158" cy="108" r="9"/>
+          <circle class="node-idle" cx="158" cy="154" r="9"/>
+          <circle class="node-active" cx="158" cy="200" r="9"/>
+          <circle class="node-active" cx="158" cy="246" r="9"/>
+          <circle class="node-idle" cx="158" cy="292" r="9"/>
+          <circle class="node-idle" cx="256" cy="154" r="9"/>
+          <circle class="node-active" cx="256" cy="200" r="9"/>
+          <circle class="node-active" cx="256" cy="246" r="9"/>
+          <circle class="node-core" cx="350" cy="200" r="20"/>
+          <circle cx="350" cy="200" r="20" fill="none" stroke="var(--accent)" stroke-width="1.5" opacity="0.4"/>
         </svg>
       </div>
     </div>
