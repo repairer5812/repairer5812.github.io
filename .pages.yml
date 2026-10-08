@@ -40,6 +40,52 @@ content:
         label: 본문
         type: rich-text
 
+  - name: notes
+    label: 수업 노트
+    type: collection
+    path: src/content/notes
+    filename: '{fields.title}.md'
+    view:
+      fields: [title, course, date, draft]
+    fields:
+      - name: title
+        label: 제목
+        type: string
+        required: true
+      - name: course
+        label: 과목
+        type: select
+        required: true
+        options:
+          values:
+            - { value: stat-learning, label: 통계적학습개론 }
+            - { value: text-mining,   label: 텍스트마이닝 }
+            - { value: social-media,  label: 소셜미디어 분석 }
+      - name: date
+        label: 기준일
+        type: date
+        required: true
+        options:
+          format: 'yyyy-MM-dd'
+      - name: kind
+        label: 종류
+        type: string
+        default: 복습노트
+      - name: scope
+        label: 범위
+        type: string
+      - name: summary
+        label: 요약
+        type: text
+      - name: draft
+        label: 초안(비공개)
+        type: boolean
+        default: false
+      - name: body
+        # 수식($$...$$)이 깨지지 않도록 rich-text 가 아니라 원본 마크다운으로 편집한다.
+        label: 본문(마크다운)
+        type: text
+
   - name: resources
     label: 자료
     type: file

@@ -1,0 +1,350 @@
+/* ============================================================
+   note.css — 수업 노트 전용. 노트 헤더 + 목차 레일 + 색 박스 + 수식.
+   global.css의 디자인 토큰(:root)을 그대로 쓰고, prose 본문 타이포는
+   blog.css의 .prose 규칙을 공유한다(같은 글 읽기 경험 유지).
+   ============================================================ */
+
+/* 색 박스 토큰. 액센트(크림슨) 한 점 원칙은 유지하되,
+   복습 노트에서는 '핵심 / 함정 / 범위 밖 / 문제'가 의미를 나르므로
+   최소한의 의미색을 둔다. 테두리 띠(side-stripe)는 쓰지 않는다. */
+:root {
+  --cal-key-bg: #f7eaed;
+  --cal-key-line: #e0c2c8;
+  --cal-key-label: #6e1f2a;
+
+  --cal-trap-bg: #fdf4e6;
+  --cal-trap-line: #e8d3ae;
+  --cal-trap-label: #7a4a08;
+
+  --cal-extra-bg: #e7f3f1;
+  --cal-extra-line: #bcd9d4;
+  --cal-extra-label: #0c574f;
+
+  --cal-q-bg: var(--panel-2);
+  --cal-q-line: var(--border-strong);
+  --cal-q-label: var(--ink);
+}
+
+/* ---------- 노트 헤더 ---------- */
+.note-head {
+  padding-top: clamp(2.2rem, 5vw, 3.4rem);
+  padding-bottom: clamp(1.4rem, 3vw, 2rem);
+  border-bottom: 1px solid var(--border);
+}
+.note-head .post-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.88rem;
+  font-weight: 640;
+  color: var(--muted);
+}
+.note-head .post-back:hover { color: var(--accent); }
+.note-head h1 {
+  margin-top: var(--s4);
+  font-size: clamp(1.9rem, 4vw, 2.7rem);
+  font-weight: 820;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  text-wrap: balance;
+  word-break: keep-all;
+}
+.note-summary {
+  margin-top: var(--s4);
+  max-width: 64ch;
+  color: var(--ink-2);
+  font-size: clamp(1.02rem, 1.4vw, 1.13rem);
+  font-weight: 600;
+  line-height: 1.65;
+  word-break: keep-all;
+  text-wrap: pretty;
+}
+
+/* 사실 요약(과목·구성·범위·기준일) */
+.note-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--s3) var(--s5);
+  margin-top: var(--s6);
+  padding: var(--s4) 0 0;
+  border-top: 1px solid var(--border);
+}
+.note-facts > div { min-width: 0; }
+.note-facts-wide { grid-column: 1 / -1; }
+.note-facts dt {
+  /* 한글 라벨이라 mono 를 쓰면 글리프 폴백으로 자간이 깨진다 → 산세리프 */
+  font-size: 0.74rem;
+  font-weight: 640;
+  color: var(--muted);
+  letter-spacing: 0;
+}
+.note-facts dd {
+  margin-top: 0.25rem;
+  font-size: 0.93rem;
+  font-weight: 680;
+  color: var(--ink);
+  word-break: keep-all;
+}
+.note-facts time { font-family: var(--mono); font-weight: 500; font-size: 0.88rem; }
+
+/* 색 박스 범례 */
+.note-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: var(--s5);
+}
+.note-legend .lg {
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0.22rem 0.62rem;
+  border-radius: 999px;
+  border: 1px solid;
+  white-space: nowrap;
+}
+.lg-key   { color: var(--cal-key-label);   background: var(--cal-key-bg);   border-color: var(--cal-key-line); }
+.lg-trap  { color: var(--cal-trap-label);  background: var(--cal-trap-bg);  border-color: var(--cal-trap-line); }
+.lg-extra { color: var(--cal-extra-label); background: var(--cal-extra-bg); border-color: var(--cal-extra-line); }
+.lg-q     { color: var(--cal-q-label);     background: var(--cal-q-bg);     border-color: var(--cal-q-line); }
+
+/* ---------- 본문 + 목차 레일 ---------- */
+.note-shell {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: start;
+}
+/* grid item 의 기본 min-width:auto 가 목차 가로 스크롤러를 밀어내 페이지를
+   통째로 넓히는 것을 막는다(모바일 blowout). */
+.note-toc,
+.note-body { min-width: 0; }
+
+.note-toc {
+  position: sticky;
+  top: 84px;
+  max-height: calc(100vh - 110px);
+  overflow-y: auto;
+  padding: var(--s4) 0;
+  overscroll-behavior: contain;
+}
+.toc-title {
+  font-size: 0.74rem;
+  font-weight: 640;
+  color: var(--muted);
+  margin-bottom: var(--s3);
+}
+.note-toc ol { list-style: none; display: flex; flex-direction: column; gap: 0.1rem; }
+.note-toc a {
+  display: block;
+  padding: 0.4rem 0.6rem;
+  border-radius: var(--r-sm);
+  font-size: 0.86rem;
+  font-weight: 620;
+  line-height: 1.4;
+  color: var(--ink-2);
+  word-break: keep-all;
+  transition: color 0.2s var(--ease), background 0.2s var(--ease);
+}
+.note-toc a:hover { color: var(--ink); background: var(--panel); }
+.note-toc a[data-active='true'] {
+  color: var(--accent-strong);
+  background: var(--accent-tint);
+  font-weight: 720;
+}
+/* .note-toc a(0,1,1)가 .toc-top(0,1,0)을 이기므로 항상 클래스 두 개로 적는다. */
+.note-toc .toc-top {
+  display: inline-block;
+  margin-top: var(--s4);
+  padding: 0 0.6rem;
+  border: 0;
+  background: none;
+  font-size: 0.78rem;
+  font-weight: 620;
+  color: var(--muted);
+}
+.toc-top:hover { color: var(--accent); }
+
+/* 노트 본문은 표·수식이 있어 블로그보다 약간 넓게 */
+.note-body.prose {
+  max-width: 74ch;
+  margin-top: clamp(1.5rem, 3vw, 2.2rem);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+/* 파트 제목은 구분선을 둬서 스크롤 중에도 경계가 보이게 */
+.note-body.prose h2 {
+  padding-top: 0.8em;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 78px;
+}
+.note-body.prose h3 { scroll-margin-top: 78px; }
+.note-body.prose > h2:first-of-type { border-top: 0; padding-top: 0; }
+
+/* 파트 도입 인용(원 자료 대응 표시) */
+.note-body.prose blockquote {
+  background: var(--panel);
+  border-left: 3px solid var(--border-strong);
+  color: var(--ink-2);
+  font-size: 0.93rem;
+  line-height: 1.7;
+}
+
+/* ---------- 색 박스 ---------- */
+.prose .cal {
+  margin-top: 1.5em;
+  padding: clamp(0.95rem, 2vw, 1.25rem) clamp(1rem, 2.2vw, 1.4rem);
+  border: 1px solid;
+  border-radius: var(--r);
+  font-size: 0.95rem;
+  line-height: 1.72;
+}
+.prose .cal > * + * { margin-top: 0.8em; }
+/* 첫 줄(굵은 한 문장)이 곧 박스 제목 */
+.prose .cal > p:first-child > strong:only-child {
+  display: block;
+  font-size: 0.88rem;
+  font-weight: 780;
+  letter-spacing: -0.01em;
+}
+.prose .cal.key   { background: var(--cal-key-bg);   border-color: var(--cal-key-line); }
+.prose .cal.trap  { background: var(--cal-trap-bg);  border-color: var(--cal-trap-line); }
+.prose .cal.extra { background: var(--cal-extra-bg); border-color: var(--cal-extra-line); }
+.prose .cal.q     { background: var(--cal-q-bg);     border-color: var(--cal-q-line); }
+
+.prose .cal.key   > p:first-child > strong:only-child { color: var(--cal-key-label); }
+.prose .cal.trap  > p:first-child > strong:only-child { color: var(--cal-trap-label); }
+.prose .cal.extra > p:first-child > strong:only-child { color: var(--cal-extra-label); }
+.prose .cal.q     > p:first-child > strong:only-child { color: var(--cal-q-label); }
+
+/* 문제 박스는 '문제'임을 라벨로 명시(색만으로 구분하지 않는다) */
+.prose .cal.q::before {
+  content: '문제';
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 740;
+  color: var(--muted);
+  margin-bottom: 0.5em;
+}
+
+/* 박스 안 수식은 배경과 겹치지 않게 여백만 조정 */
+.prose .cal .katex-display { margin: 0.7em 0; }
+
+/* ---------- 풀이 접기 ---------- */
+.prose details.solve {
+  margin-top: 0.9em;
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  background: var(--surface);
+  overflow: hidden;
+}
+.prose details.solve > summary {
+  cursor: pointer;
+  list-style: none;
+  padding: 0.75rem clamp(1rem, 2.2vw, 1.4rem);
+  font-size: 0.88rem;
+  font-weight: 720;
+  color: var(--accent-strong);
+  background: var(--panel);
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
+  user-select: none;
+}
+.prose details.solve > summary::-webkit-details-marker { display: none; }
+.prose details.solve > summary::before {
+  content: '▸';
+  display: inline-block;
+  margin-right: 0.5rem;
+  transition: transform 0.2s var(--ease);
+}
+.prose details.solve[open] > summary::before { transform: rotate(90deg); }
+.prose details.solve[open] > summary { border-bottom: 1px solid var(--border); }
+.prose details.solve > summary:hover { background: var(--accent-tint); color: var(--accent); }
+.prose details.solve > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.prose details.solve > *:not(summary) {
+  margin: 0.9em clamp(1rem, 2.2vw, 1.4rem);
+}
+.prose details.solve > *:not(summary):last-child { margin-bottom: 1.1em; }
+
+/* ---------- 치트시트 표 안의 '보충' 표시 ---------- */
+.prose .h-extra {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--cal-extra-label);
+  background: var(--cal-extra-bg);
+  border: 1px solid var(--cal-extra-line);
+  border-radius: 5px;
+  padding: 0.02em 0.34em;
+  margin-left: 0.25em;
+  vertical-align: 0.1em;
+  white-space: nowrap;
+}
+
+/* ---------- 수식(KaTeX) ---------- */
+.prose .katex { font-size: 1.04em; }
+.prose .katex-display {
+  margin: 1.15em 0;
+  padding: 0.15em 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+}
+/* 긴 수식이 잘리지 않고 가로로만 스크롤되게 */
+.prose .katex-display > .katex { text-align: center; white-space: normal; }
+/* 표 안 인라인 수식은 줄바꿈 허용 */
+.prose td .katex, .prose th .katex { font-size: 0.97em; }
+.prose td, .prose th { word-break: keep-all; }
+.prose table { font-size: 0.9rem; }
+
+/* ---------- 노트 하단 ---------- */
+.note-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s3);
+  padding-top: clamp(1.5rem, 3vw, 2rem);
+  padding-bottom: clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid var(--border);
+}
+
+/* ---------- 반응형: 목차를 가로 칩 줄로 ---------- */
+@media (max-width: 900px) {
+  .note-shell { grid-template-columns: minmax(0, 1fr); gap: 0; }
+
+  .note-toc {
+    position: static;
+    max-height: none;
+    overflow: visible;
+    margin-top: var(--s5);
+    padding: var(--s3) 0 var(--s4);
+    border-bottom: 1px solid var(--border);
+  }
+  .note-toc ol {
+    flex-direction: row;
+    gap: 0.4rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.35rem;
+    scrollbar-width: thin;
+  }
+  .note-toc li { flex: 0 0 auto; }
+  .note-toc a {
+    white-space: nowrap;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    font-size: 0.82rem;
+    padding: 0.35rem 0.7rem;
+  }
+  .note-toc a[data-active='true'] { border-color: var(--accent-line); }
+  .note-toc .toc-top { display: none; }
+
+  .note-body.prose { max-width: none; }
+}
+
+/* ---------- 인쇄 ---------- */
+@media print {
+  .site-header, .site-footer, .note-toc, .note-foot, .note-legend { display: none !important; }
+  .note-shell { display: block; }
+  .note-body.prose { max-width: none; margin: 0; font-size: 10.5pt; }
+  .prose details.solve { border-color: #bbb; }
+  .prose .cal { break-inside: avoid; border-color: #bbb; }
+  .prose h2 { break-after: avoid; }
+  .prose h3 { break-after: avoid; }
+}

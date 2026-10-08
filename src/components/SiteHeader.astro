@@ -2,16 +2,17 @@
 /**
  * SiteHeader — 풀폭 sticky 헤더.
  * 브랜드 "최경찬"(크림슨 닷) + 내비.
- * activeNav: 'home' | 'about' | 'blog' | 'resources' 중 현재 페이지를 강조.
+ * activeNav: 'home' | 'about' | 'courses' | 'blog' | 'resources' 중 현재 페이지를 강조.
  */
 interface Props {
-  activeNav?: 'home' | 'about' | 'blog' | 'resources';
+  activeNav?: 'home' | 'about' | 'courses' | 'blog' | 'resources';
 }
 const { activeNav } = Astro.props;
 
 const links = [
   { key: 'home', href: '/', label: '홈' },
   { key: 'about', href: '/about', label: '소개' },
+  { key: 'courses', href: '/수업', label: '수업' },
   { key: 'blog', href: '/blog', label: '글' },
   { key: 'resources', href: '/자료', label: '자료' },
 ] as const;

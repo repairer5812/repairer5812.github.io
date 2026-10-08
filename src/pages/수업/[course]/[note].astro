@@ -1,0 +1,156 @@
+---
+import Base from '../../../layouts/Base.astro';
+import courses from '../../../data/courses.json';
+import { getCollection, render } from 'astro:content';
+import 'katex/dist/katex.min.css';
+import '../../../styles/blog.css';
+import '../../../styles/note.css';
+
+export async function getStaticPaths() {
+  const all = await getCollection('notes', ({ data }) => !data.draft);
+  return all.map((note) => ({
+    params: { course: note.data.course, note: note.id },
+    props: { note },
+  }));
+}
+
+const { note } = Astro.props;
+const { Content, headings } = await render(note);
+
+const course = courses.find((c) => c.slug === note.data.course)!;
+const parts = headings.filter((h) => h.depth === 2);
+
+const fmt = (d: Date) =>
+  `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
+---
+
+<Base
+  activeNav="courses"
+  title={`${note.data.title} · ${course.name} · 최경찬`}
+  description={note.data.summary ?? note.data.title}
+>
+  <div class="wrap">
+    <header class="note-head">
+      <a class="post-back" href={`/수업/${course.slug}`}>
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+        {course.name}
+      </a>
+      <h1>{note.data.title}</h1>
+      {note.data.summary && <p class="note-summary">{note.data.summary}</p>}
+
+      <dl class="note-facts">
+        <div>
+          <dt>과목</dt>
+          <dd>{course.name}</dd>
+        </div>
+        <div>
+          <dt>구성</dt>
+          <dd>{parts.length}개 파트</dd>
+        </div>
+        {note.data.scope && (
+          <div class="note-facts-wide">
+            <dt>범위</dt>
+            <dd>{note.data.scope}</dd>
+          </div>
+        )}
+        <div>
+          <dt>기준일</dt>
+          <dd><time datetime={note.data.date.toISOString()}>{fmt(note.data.date)}</time></dd>
+        </div>
+      </dl>
+
+      <div class="note-legend" aria-label="박스 색 안내">
+        <span class="lg lg-key">핵심정리</span>
+        <span class="lg lg-trap">헷갈림 포인트</span>
+        <span class="lg lg-extra">자료 밖 보충</span>
+        <span class="lg lg-q">손풀이 문제</span>
+      </div>
+    </header>
+  </div>
+
+  <div class="wrap note-shell">
+    <nav class="note-toc" aria-label="파트 목록">
+      <p class="toc-title">파트</p>
+      <ol>
+        {parts.map((h) => (
+          <li><a href={`#${h.slug}`}>{h.text}</a></li>
+        ))}
+      </ol>
+      <a class="toc-top" href="#top">맨 위로</a>
+    </nav>
+
+    <article class="note-body prose">
+      <span id="top"></span>
+      <Content />
+    </article>
+  </div>
+
+  <div class="wrap">
+    <footer class="note-foot">
+      <a class="btn btn-ghost" href={`/수업/${course.slug}`}>{course.name} 노트 목록</a>
+      <a class="btn btn-ghost" href="/수업">수업 전체</a>
+    </footer>
+  </div>
+
+  <script>
+    // 현재 읽는 파트를 목차에서 강조한다. IntersectionObserver가 없거나 실패해도
+    // 목차 자체는 항상 보이므로 기능 손실은 없다.
+    (function () {
+      var toc = document.querySelector('.note-toc');
+      if (!toc || !('IntersectionObserver' in window)) return;
+      var links = Array.prototype.slice.call(toc.querySelectorAll('a[href^="#"]'));
+      var map = {};
+      var targets = [];
+      links.forEach(function (a) {
+        var id = decodeURIComponent(a.getAttribute('href').slice(1));
+        var el = document.getElementById(id);
+        if (!el) return;
+        map[id] = a;
+        targets.push(el);
+      });
+      if (!targets.length) return;
+
+      var seen = {};
+      var io = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (e) {
+            seen[e.target.id] = e.isIntersecting;
+          });
+          var active = null;
+          for (var i = 0; i < targets.length; i++) {
+            if (seen[targets[i].id]) { active = targets[i].id; break; }
+          }
+          links.forEach(function (a) { a.removeAttribute('data-active'); });
+          if (active && map[active]) map[active].setAttribute('data-active', 'true');
+        },
+        { rootMargin: '-64px 0px -70% 0px', threshold: 0 }
+      );
+      targets.forEach(function (t) { io.observe(t); });
+    })();
+
+    // 인쇄할 때는 접어 둔 풀이를 모두 펼치고, 끝나면 원래대로 되돌린다.
+    (function () {
+      var opened = [];
+      function expand() {
+        opened = [];
+        var list = document.querySelectorAll('details.solve:not([open])');
+        Array.prototype.forEach.call(list, function (d) {
+          opened.push(d);
+          d.open = true;
+        });
+      }
+      function restore() {
+        opened.forEach(function (d) { d.open = false; });
+        opened = [];
+      }
+      window.addEventListener('beforeprint', expand);
+      window.addEventListener('afterprint', restore);
+      if (window.matchMedia) {
+        var mq = window.matchMedia('print');
+        var onChange = function (e) { (e.matches ? expand : restore)(); };
+        if (mq.addEventListener) mq.addEventListener('change', onChange);
+        else if (mq.addListener) mq.addListener(onChange);
+      }
+    })();
+  </script>
+</Base>

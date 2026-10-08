@@ -1,0 +1,179 @@
+---
+import Base from '../../layouts/Base.astro';
+import courses from '../../data/courses.json';
+import { getCollection } from 'astro:content';
+
+const notes = await getCollection('notes', ({ data }) => !data.draft);
+const countOf = (slug: string) => notes.filter((n) => n.data.course === slug).length;
+
+const term = courses[0]?.term ?? '';
+const totalNotes = notes.length;
+---
+
+<Base
+  activeNav="courses"
+  title="수업 · 최경찬"
+  description="고려대 SW·AI 융합대학원 2026-2학기 수강 과목과 복습노트. 통계적학습개론, 텍스트마이닝, 소셜미디어 분석."
+>
+  <div class="wrap">
+    <header class="page-head">
+      <h1>수업</h1>
+      <p class="page-lead">
+        <b>{term}</b>에 듣는 과목과, 공부하면서 정리한 <b>복습노트</b>를 모았습니다.
+        노트는 수업 자료를 그대로 옮긴 것이 아니라 <b>복습 순서대로 다시 묶은</b> 것입니다.
+        누구나 보고 복습할 수 있게 공개해 둡니다.
+      </p>
+    </header>
+  </div>
+
+  <section class="section co-section">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>이번 학기 <span class="res-count">{courses.length}</span></h2>
+        <p class="sec-note">
+          과목을 누르면 해당 과목의 노트 목록으로 이동합니다. 현재 공개된 노트는 모두 {totalNotes}편입니다.
+        </p>
+      </div>
+
+      <ul class="co-list">
+        {courses.map((c, i) => {
+          const n = countOf(c.slug);
+          return (
+            <li class="co-item reveal" style={`--d:${0.06 * (i + 1)}s`}>
+              <div class="co-main">
+                <h3>
+                  <a href={`/수업/${c.slug}`}>
+                    {c.name} <span class="arrow" aria-hidden="true">→</span>
+                  </a>
+                </h3>
+                <p class="co-tagline">{c.tagline}</p>
+                <p class="co-desc">{c.desc}</p>
+              </div>
+              <div class="co-side">
+                <div class="co-notes" data-empty={n === 0 ? 'true' : undefined}>
+                  {n > 0 ? `노트 ${n}편` : '노트 준비 중'}
+                </div>
+                <div class="co-topics">
+                  {c.topics.map((t) => <span class="chip">{t}</span>)}
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .page-lead b { color: var(--ink); font-weight: 720; }
+
+  .co-section { padding-block: clamp(1rem, 2vw, 1.5rem) clamp(2.5rem, 5vw, 4rem); }
+
+  .res-count {
+    font-family: var(--mono);
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--muted);
+    vertical-align: 0.18em;
+    margin-left: 0.15rem;
+  }
+
+  .co-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s4);
+  }
+
+  .co-item {
+    display: grid;
+    grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr);
+    gap: clamp(1rem, 3vw, 2.25rem);
+    align-items: start;
+    padding: clamp(1.15rem, 2.4vw, 1.75rem);
+    border: 1px solid var(--border);
+    border-radius: var(--r);
+    background: var(--surface);
+    transition: border-color 0.25s var(--ease), background 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+  .co-item:hover {
+    border-color: var(--border-strong);
+    background: var(--panel);
+    transform: translateX(4px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .co-item:hover { transform: none; }
+  }
+
+  .co-main { min-width: 0; }
+  .co-item h3 {
+    font-size: clamp(1.25rem, 2vw, 1.55rem);
+    font-weight: 780;
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+    word-break: keep-all;
+  }
+  .co-item h3 a { color: var(--ink); display: inline; }
+  .co-item h3 a:hover { color: var(--accent); }
+  .co-item h3 .arrow {
+    display: inline-block;
+    color: var(--muted);
+    transition: transform 0.25s var(--ease), color 0.25s var(--ease);
+  }
+  .co-item:hover h3 .arrow { transform: translateX(4px); color: var(--accent); }
+
+  .co-tagline {
+    margin-top: 0.4rem;
+    font-size: 0.95rem;
+    font-weight: 680;
+    color: var(--accent-strong);
+    word-break: keep-all;
+  }
+  .co-desc {
+    margin-top: var(--s3);
+    color: var(--ink-2);
+    font-size: 0.95rem;
+    line-height: 1.65;
+    text-wrap: pretty;
+    word-break: keep-all;
+  }
+
+  .co-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: var(--s3);
+    align-self: start;
+    padding-top: 0.3rem;
+  }
+  .co-notes {
+    font-size: 0.78rem;
+    font-weight: 680;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent-strong);
+    border: 1px solid var(--accent-line);
+    background: var(--accent-tint);
+    border-radius: 999px;
+    padding: 0.22rem 0.7rem;
+    white-space: nowrap;
+  }
+  .co-notes[data-empty] {
+    color: var(--muted);
+    border-color: var(--border);
+    background: var(--panel-2);
+  }
+  .co-topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    justify-content: flex-end;
+  }
+  .co-topics .chip { background: var(--panel-2); }
+
+  @media (max-width: 760px) {
+    .co-item { grid-template-columns: 1fr; gap: var(--s3); }
+    .co-side { align-items: flex-start; }
+    .co-topics { justify-content: flex-start; }
+  }
+</style>
