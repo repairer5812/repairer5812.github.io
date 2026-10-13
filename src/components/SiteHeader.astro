@@ -9,10 +9,12 @@ interface Props {
 }
 const { activeNav } = Astro.props;
 
+// '공부'는 대학원 공부 사이트인 AI Study Hub 로 바로 간다(같은 도메인의 /ai-study-hub/).
+// 이 사이트의 /공부 화면(과목 목록과 복습노트)은 남아 있고, AI Study Hub 의 과목 화면에서 연결한다.
 const links = [
   { key: 'home', href: '/', label: '홈' },
   { key: 'about', href: '/about', label: '소개' },
-  { key: 'courses', href: '/공부', label: '공부' },
+  { key: 'courses', href: 'https://repairer5812.github.io/ai-study-hub/', label: '공부' },
   { key: 'blog', href: '/blog', label: '글' },
   { key: 'resources', href: '/자료', label: '자료' },
 ] as const;
