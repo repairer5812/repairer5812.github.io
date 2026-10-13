@@ -18,6 +18,8 @@ const fmt = (d: Date) =>
   `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, '0')}.${String(d.getDate()).padStart(2, '0')}`;
 
 const others = courses.filter((c) => c.slug !== course.slug);
+// 시험 준비 자료(개념 지도, 모의시험)는 별도 사이트인 AI Study Hub 에 있다. 과목에 연결이 있으면 보여 준다.
+const prep = 'prep' in course ? course.prep : null;
 ---
 
 <Base
@@ -39,6 +41,25 @@ const others = courses.filter((c) => c.slug !== course.slug);
       </div>
     </header>
   </div>
+
+  {prep && (
+    <section class="section co-section co-prep">
+      <div class="wrap">
+        <div class="sec-head reveal">
+          <h2>시험 준비</h2>
+        </div>
+        <ul class="oth-list">
+          <li>
+            <a href={prep.url}>
+              <strong>{prep.label}</strong>
+              <span>{prep.desc}</span>
+              <span class="arrow" aria-hidden="true">→</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  )}
 
   <section class="section co-section">
     <div class="wrap">
@@ -127,6 +148,8 @@ const others = courses.filter((c) => c.slug !== course.slug);
   .co-topics-head .chip { background: var(--panel-2); }
 
   .co-section { padding-block: clamp(1rem, 2vw, 1.5rem) clamp(2rem, 4vw, 3rem); }
+  .co-prep + .co-section { border-top: 0; }
+  .co-prep .sec-head { margin-bottom: var(--s4); }
   .co-other { padding-block: 0 clamp(2.5rem, 5vw, 4rem); }
 
   .res-count {

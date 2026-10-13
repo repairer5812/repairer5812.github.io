@@ -35,6 +35,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
+  /* blog.css 의 .post-back 은 mono 인데, 과목명은 한글이라 글리프 폴백으로 자간이 벌어진다 → 산세리프 */
+  font-family: var(--sans);
   font-size: 0.88rem;
   font-weight: 640;
   color: var(--muted);

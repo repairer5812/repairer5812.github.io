@@ -5,7 +5,12 @@
     "term": "2026-2학기",
     "tagline": "확률·통계·선형대수·미분을 하나의 학습 이론으로 잇는 과목",
     "desc": "기대위험과 경험위험, MLE와 MAP, least squares와 projection, gradient까지. 모형을 데이터에 맞추는 일이 왜 성립하는지를 수식으로 확인합니다.",
-    "topics": ["확률·베이즈", "추정(MLE·MAP)", "선형대수·Projection", "미분·Gradient", "정보이론", "생성모델"]
+    "topics": ["확률·베이즈", "추정(MLE·MAP)", "선형대수·Projection", "미분·Gradient", "정보이론", "생성모델"],
+    "prep": {
+      "label": "AI Study Hub에서 준비하기",
+      "desc": "개념 지도, 종이로 푸는 중간고사 모의시험, 주제별 문제는 AI Study Hub에 있습니다.",
+      "url": "https://repairer5812.github.io/ai-study-hub/subject.html?s=sl"
+    }
   },
   {
     "slug": "text-mining",
