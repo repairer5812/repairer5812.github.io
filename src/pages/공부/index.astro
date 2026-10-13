@@ -12,12 +12,12 @@ const totalNotes = notes.length;
 
 <Base
   activeNav="courses"
-  title="수업 · 최경찬"
-  description="고려대 SW·AI 융합대학원 2026-2학기 수강 과목과 복습노트. 통계적학습개론, 텍스트마이닝, 소셜미디어 분석."
+  title="공부 · 최경찬"
+  description="고려대 SW·AI 융합대학원에서 공부하며 만든 복습노트와 시험 준비 자료. 2026-2학기 통계적학습개론, 텍스트마이닝, 소셜미디어 분석."
 >
   <div class="wrap">
     <header class="page-head">
-      <h1>수업</h1>
+      <h1>공부</h1>
       <p class="page-lead">
         <b>{term}</b>에 듣는 과목과, 공부하면서 정리한 <b>복습노트</b>를 모았습니다.
         노트는 수업 자료를 그대로 옮긴 것이 아니라 <b>복습 순서대로 다시 묶은</b> 것입니다.
@@ -25,6 +25,26 @@ const totalNotes = notes.length;
       </p>
     </header>
   </div>
+
+  <section class="section co-section co-hub">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>시험 준비와 문제 풀이</h2>
+        <p class="sec-note">
+          개념 지도, 모의시험, 주차별 문제는 따로 만든 사이트 AI Study Hub에 있습니다.
+        </p>
+      </div>
+      <ul class="oth-list">
+        <li>
+          <a href="https://repairer5812.github.io/ai-study-hub/">
+            <strong>AI Study Hub</strong>
+            <span>이번 학기 통계적학습개론과 지난 학기 기계학습, 딥러닝, 자료구조, 인공지능 보안기술을 볼 수 있습니다.</span>
+            <span class="arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </section>
 
   <section class="section co-section">
     <div class="wrap">
@@ -42,7 +62,7 @@ const totalNotes = notes.length;
             <li class="co-item reveal" style={`--d:${0.06 * (i + 1)}s`}>
               <div class="co-main">
                 <h3>
-                  <a href={`/수업/${c.slug}`}>
+                  <a href={`/공부/${c.slug}`}>
                     {c.name} <span class="arrow" aria-hidden="true">→</span>
                   </a>
                 </h3>
@@ -69,6 +89,29 @@ const totalNotes = notes.length;
   .page-lead b { color: var(--ink); font-weight: 720; }
 
   .co-section { padding-block: clamp(1rem, 2vw, 1.5rem) clamp(2.5rem, 5vw, 4rem); }
+  .co-hub { padding-bottom: clamp(1rem, 2vw, 1.5rem); }
+  .co-hub + .co-section { border-top: 0; }
+  .co-hub .sec-head { margin-bottom: var(--s3); }
+
+  /* 과목 화면의 이동 줄(.oth-list)과 같은 꼴 */
+  .oth-list { list-style: none; display: flex; flex-direction: column; }
+  .oth-list a {
+    display: flex;
+    align-items: baseline;
+    gap: 0.9rem;
+    padding: var(--s4) 0;
+    color: var(--ink);
+  }
+  .oth-list strong { font-weight: 720; letter-spacing: -0.02em; white-space: nowrap; }
+  .oth-list span:not(.arrow) {
+    color: var(--ink-2);
+    font-size: 0.9rem;
+    min-width: 0;
+    word-break: keep-all;
+  }
+  .oth-list .arrow { margin-left: auto; color: var(--muted); transition: transform 0.25s var(--ease), color 0.25s var(--ease); }
+  .oth-list a:hover { color: var(--accent); }
+  .oth-list a:hover .arrow { transform: translateX(4px); color: var(--accent); }
 
   .res-count {
     font-family: var(--mono);
@@ -172,6 +215,8 @@ const totalNotes = notes.length;
   .co-topics .chip { background: var(--panel-2); }
 
   @media (max-width: 760px) {
+    .oth-list a { flex-wrap: wrap; gap: 0.35rem 0.9rem; }
+    .oth-list .arrow { margin-left: 0; }
     .co-item { grid-template-columns: 1fr; gap: var(--s3); }
     .co-side { align-items: flex-start; }
     .co-topics { justify-content: flex-start; }
